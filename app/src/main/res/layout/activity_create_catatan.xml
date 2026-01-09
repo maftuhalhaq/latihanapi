@@ -1,44 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
+    android:fillViewport="true"
+    android:background="#FFFFFF"
     tools:context=".CreateCatatan">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Buat Catatan"
-        android:textSize="30dp"
-        android:id="@+id/judul"
-        android:layout_marginBottom="40dp"
-        />
-
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Isi judul catatan"
-        android:id="@+id/inputJudul"
-        android:layout_marginBottom="20dp"
-        android:layout_below="@+id/judul"
-        />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Isi catatan"
-        android:id="@+id/inputIsi"
-        android:layout_below="@+id/inputJudul"
-        />
+        <TextView
+            android:id="@+id/judul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buat Catatan Baru"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginBottom="30dp" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Simpan Catatan"
-        android:id="@+id/tombolSimpan"
-        android:layout_below="@+id/inputIsi"
-        />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Judul Catatan"
+            android:layout_marginBottom="16dp"
+            android:textColorHint="#606060"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-</RelativeLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputJudul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:textColor="#000000"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Isi Catatan"
+            android:layout_marginBottom="24dp"
+            android:textColorHint="#606060"
+            app:boxStrokeColor="#000000"
+            app:hintTextColor="#000000"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputIsi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:textColor="#000000"
+                android:minLines="6" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/tombolSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Simpan Catatan"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#000000" />
+
+    </LinearLayout>
+</ScrollView>

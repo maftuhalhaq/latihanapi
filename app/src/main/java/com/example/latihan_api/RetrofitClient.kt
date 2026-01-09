@@ -1,11 +1,12 @@
 package com.example.latihan_api
 
+
 import com.example.latihan_api.repository.CatatanRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.18.80:8000/api/"
+    private const val BASE_URL = "http://192.168.18.198:8000/api/"
 
     val catatanRepository: CatatanRepository by lazy {
         Retrofit.Builder()

@@ -14,39 +14,40 @@ class CatatanAdapter(
 
     interface CatatanItemevents {
         fun onEdit(catatan: Catatan)
+        fun onDelete(catatan: Catatan) // --- BARU: Tambah fungsi ini
     }
 
     inner class CatatanViewHolder(
         val view: ItemCatatanBinding
     ) : RecyclerView.ViewHolder(view.root) {
-        // Fungsi untuk mengikat data ke tampilan (TextView)
+
         fun setDataKeUI(data: Catatan) {
             view.judul.text = data.judul
             view.isi.text = data.isi
 
+            // Klik Singkat -> Edit
             view.root.setOnClickListener{
                 events.onEdit(data)
+            }
+
+            // --- BARU: Tekan Tahan (Long Click) -> Hapus ---
+            view.root.setOnLongClickListener {
+                events.onDelete(data)
+                true // true artinya event ini selesai disini (tidak lanjut ke onClick)
             }
         }
     }
 
+    // ... (sisa kode onCreateViewHolder, getItemCount, onBindViewHolder, updateDataset TETAP SAMA, tidak perlu diubah) ...
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatatanViewHolder {
-        val binding = ItemCatatanBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-
+        val binding = ItemCatatanBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CatatanViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return dataset.size
-    }
+    override fun getItemCount(): Int = dataset.size
 
     override fun onBindViewHolder(holder: CatatanViewHolder, position: Int) {
-        val dataSekarang = dataset[position]
-        holder.setDataKeUI(dataSekarang)
+        holder.setDataKeUI(dataset[position])
     }
 
     @SuppressLint("NotifyDataSetChanged")

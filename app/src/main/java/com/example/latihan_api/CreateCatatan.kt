@@ -37,10 +37,6 @@ class CreateCatatan : AppCompatActivity() {
 
     fun setupEvents() {
         binding.tombolSimpan.setOnClickListener {
-            // --- TARUH KODE TES DI SINI (BARIS PERTAMA DALAM KURUNG KURAWAL) ---
-            Toast.makeText(this, "TOMBOL DITEKAN!", Toast.LENGTH_SHORT).show()
-            Log.d("CobaTes", "Tombol Simpan Ditekan!")
-            // -------------------------------------------------------------------
 
             val judul = binding.inputJudul.text.toString()
             val isi = binding.inputIsi.text.toString()

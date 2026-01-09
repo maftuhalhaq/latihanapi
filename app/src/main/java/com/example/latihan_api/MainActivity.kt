@@ -36,27 +36,68 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setupEvents() {
-        adapter = CatatanAdapter(mutableListOf(), object : CatatanAdapter.CatatanItemevents{
+        // Update bagian inisialisasi Adapter
+        adapter = CatatanAdapter(mutableListOf(), object : CatatanAdapter.CatatanItemevents {
+
+            // Event Edit (Tetap sama)
             override fun onEdit(catatan: Catatan) {
                 val intent = Intent(this@MainActivity, EditCatatanActivity::class.java)
                 intent.putExtra("id_catatan", catatan.id)
-
                 startActivity(intent)
+            }
+
+            // --- BARU: Event Delete ---
+            override fun onDelete(catatan: Catatan) {
+                // Panggil fungsi untuk menampilkan Pop-Up
+                tampilkanDialogHapus(catatan)
             }
         })
 
-
-        // Pastikan di activity_main.xml ada RecyclerView dengan ID 'container'
         binding.container.adapter = adapter
         binding.container.layoutManager = LinearLayoutManager(this)
 
-        // Kode navigasi ini dikomentari di gambar asli Anda
-//        binding.btnNavigate.setOnClickListener {
-//            val intent = Intent(this, CreateCatatan::class.java)
-//            startActivity(intent)
-//        }
-
+        // Tombol Tambah (Tetap sama)
+        binding.btnNavigate.setOnClickListener {
+            val intent = Intent(this@MainActivity, CreateCatatan::class.java)
+            startActivity(intent)
+        }
     }
+
+    private fun tampilkanDialogHapus(catatan: Catatan) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setTitle("Hapus Catatan")
+        builder.setMessage("Apakah Anda yakin ingin menghapus catatan '${catatan.judul}'?")
+
+        // Tombol Ya (Hapus)
+        builder.setPositiveButton("Hapus") { dialog, which ->
+            hapusCatatanDariServer(catatan.id ?: 0)
+        }
+
+        // Tombol Tidak (Batal)
+        builder.setNegativeButton("Batal") { dialog, which ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+    private fun hapusCatatanDariServer(id: Int) {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.catatanRepository.deleteCatatan(id)
+
+                if (response.isSuccessful) {
+                    displayMessage("Berhasil dihapus!")
+                    loadData() // Refresh list agar data yang dihapus hilang dari layar
+                } else {
+                    displayMessage("Gagal menghapus: ${response.message()}")
+                }
+            } catch (e: Exception) {
+                displayMessage("Error Koneksi: ${e.message}")
+            }
+        }
+    }
+
 
     override fun onStart() {
         super.onStart()
